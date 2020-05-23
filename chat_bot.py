@@ -10,7 +10,7 @@ from ai import interact, train, utils
 sio = socketio.Client()
 
 
-auth = {"username": "bot@trevorbot.io", "password": "awesomesauce"}
+auth = {"username": "bot@turingbot.io", "password": "awesomesauce"}
 
 if __name__ == "__main__":
     input_q = Queue()
@@ -22,8 +22,7 @@ if __name__ == "__main__":
 
     @sio.event
     def connect():
-        print("[-] Connected to sever")
-        print(sio.sid)
+        print("[-] Connected to sever, sid: ", sio.sid)
         sio.emit(
             "response_msg", {"type": "connect", "msg": "User Connected", "auth": auth}
         )
@@ -41,10 +40,11 @@ if __name__ == "__main__":
         reply = output_q.get()
         print("[-] Got reply: ", reply)
         if name != "localbot":
+            print("[-] Sending response to server")
             sio.emit(
                 "response_msg",
                 {
-                    "user_name": "localbot",
+                    "user_name": "turingbot",
                     "type": "msg",
                     "auth": auth,
                     "message": '<span class="badge badge-secondary">@{0}</span> {1}'.format(
